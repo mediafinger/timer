@@ -24,13 +24,13 @@ ActiveRecord::Schema.define(version: 20160918134750) do
   end
 
   create_table "instances", force: :cascade do |t|
-    t.integer  "project_id"
+    t.integer  "task_id"
     t.text     "comment"
     t.datetime "started_at"
     t.datetime "finished_at"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["project_id"], name: "index_instances_on_project_id", using: :btree
+    t.index ["task_id"], name: "index_instances_on_task_id", using: :btree
   end
 
   create_table "projects", force: :cascade do |t|
@@ -64,10 +64,10 @@ ActiveRecord::Schema.define(version: 20160918134750) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "clients", "users"
-  add_foreign_key "instances", "projects"
-  add_foreign_key "projects", "clients"
-  add_foreign_key "projects", "users"
-  add_foreign_key "tasks", "projects"
-  add_foreign_key "tasks", "users"
+  add_foreign_key "clients", "users", on_delete: :cascade
+  add_foreign_key "instances", "tasks", on_delete: :cascade
+  add_foreign_key "projects", "clients", on_delete: :cascade
+  add_foreign_key "projects", "users", on_delete: :cascade
+  add_foreign_key "tasks", "projects", on_delete: :cascade
+  add_foreign_key "tasks", "users", on_delete: :cascade
 end
